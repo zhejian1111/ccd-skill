@@ -8,7 +8,7 @@
 
 ### 这是什么
 
-`ccd` 默认根据**人物参考图**撰写一条完整、可直接复制的中文生图提示词，也支持图片反推和已有提示词改写。人物的五官、发色、肤色、身材比例和可见纹身以人物参考图为准。未指定画风时使用 2000 年代便携 CCD 相机的直闪质感。
+`ccd` 默认将未指定用途的上传图作为**反推源图**，撰写可搭配生图时另附人物参考图使用的中文提示词。只有明确指定人物参考图时，才从对应图片提取外貌。也支持已有提示词改写。人物的五官、发色、肤色、身材比例和可见纹身以人物参考图为准。未指定画风时使用 2000 年代便携 CCD 相机的直闪质感。
 
 - 暗背景，机顶直闪，亮度随距离快速衰减
 - 真实肤质：毛孔、细小汗毛、局部水光，不磨皮
@@ -29,7 +29,7 @@
 
 装好后开一个新对话就能用。
 
-测试实验分支时，请让安装工具明确检出 `codex/absorb-reverse-analysis`，或在下方克隆命令中给 `git clone` 加上 `--branch codex/absorb-reverse-analysis`。已有安装副本请先确认它当前的分支和提交，再开新对话测试。单图反推的成品应以“人物：严格以生图时随提示词上传的人物参考图为唯一外貌依据”开头。
+反推改动已并入 `main`，直接下载主分支即可。手机下载后请在使用端替换已导入的整个 Skill，再开新对话；只重新下载文件不一定会替换使用端的副本。可检查 `SKILL.md` 开头是否包含“上传图片但未明确指定用途”，以及 `agents/openai.yaml` 默认调用语是否为“将我上传的图片作为反推源图”。这只能核对版本内容，不能证明使用端已经加载。
 
 **手动安装：** 需要已安装 Claude Code。把整个文件夹放到 `~/.claude/skills/ccd/`，保证 `~/.claude/skills/ccd/SKILL.md` 存在即可。
 
@@ -44,7 +44,7 @@ git clone https://github.com/zhejian1111/ccd-skill.git ~/.claude/skills/ccd
 
 ### 使用
 
-**参考图生图（默认）**。上传人物参考图，输入下方命令。也可以一起指定新的场景、服装、姿势或画风。
+**图片反推（默认）**。上传源图，输入下方命令。要按上传人物的外貌创作时，请明确补充“这张是人物参考图”。也可以一起指定新的场景、服装、姿势或画风。
 
 ```
 /ccd
@@ -125,7 +125,7 @@ ccd/
 
 ### What it is
 
-`ccd` writes a copy-ready Chinese image-generation prompt to use with a character reference image. It can also reverse an image or rewrite an existing prompt using a separate character reference. Facial features, hair color, skin tone, body proportions, and visible tattoos follow the character reference. The default style is 2000s point-and-shoot CCD photography in low light.
+`ccd` defaults to reversing an uploaded source image into a copy-ready Chinese prompt for use with a separate character reference. It can also reverse an image or rewrite an existing prompt using a separate character reference. Facial features, hair color, skin tone, body proportions, and visible tattoos follow the character reference. The default style is 2000s point-and-shoot CCD photography in low light.
 
 - dark background, direct on-axis flash with fast falloff
 - real skin texture: pores, fine vellus hair, local sheen, no airbrushing
@@ -159,8 +159,8 @@ git clone https://github.com/zhejian1111/ccd-skill.git ~/.claude/skills/ccd
 
 ### Usage
 
-- **Write a prompt from a reference (default).** Upload a character reference and invoke the skill. You can specify a new scene, outfit, pose, or visual style.
-- **Reverse an image.** A source image is enough. The prompt keeps its makeup, outfit, accessories, expression, and pose. It directs the generator to follow the hairstyle, facial features, appearance, body proportions, and visible tattoos in the character reference you attach at generation time. You can also provide the character reference upfront.
+- **Write a prompt from a character reference.** Explicitly identify the uploaded image as the character reference and invoke the skill. You can specify a new scene, outfit, pose, or visual style.
+- **Reverse an image (default).** Images without an explicitly assigned role are treated as source images. The prompt keeps its makeup, outfit, accessories, expression, and pose. It directs the generator to follow the hairstyle, facial features, appearance, body proportions, and visible tattoos in the character reference you attach at generation time. You can also provide the character reference upfront.
 - **Rewrite a prompt.** When rewriting text without a character reference, the skill retains the supplied character traits unless asked to prepare the prompt for a separate reference.
 - **Partial edits:** "swap the hoodie for a black leather jacket, give me the full prompt" returns the whole updated prompt, not a fragment.
 
