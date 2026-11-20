@@ -29,6 +29,8 @@
 
 装好后开一个新对话就能用。
 
+测试实验分支时，请让安装工具明确检出 `codex/absorb-reverse-analysis`，或在下方克隆命令中给 `git clone` 加上 `--branch codex/absorb-reverse-analysis`。已有安装副本请先确认它当前的分支和提交，再开新对话测试。单图反推的成品应以“人物：严格以生图时随提示词上传的人物参考图为唯一外貌依据”开头。
+
 **手动安装：** 需要已安装 Claude Code。把整个文件夹放到 `~/.claude/skills/ccd/`，保证 `~/.claude/skills/ccd/SKILL.md` 存在即可。
 
 ```bash
@@ -108,7 +110,8 @@ git clone https://github.com/zhejian1111/ccd-skill.git ~/.claude/skills/ccd
 ccd/
 ├── SKILL.md                 # 入口：读图规则、交付格式、自查
 ├── references/
-│   └── defaults.md          # 人物保真模板和 CCD 摄影默认
+│   ├── defaults.md          # 已提供人物参考图的模板和 CCD 摄影默认
+│   └── reverse-analysis.md  # 反推的来源筛选和画面分析
 └── agents/openai.yaml       # Codex 界面信息（Claude Code 不读）
 ```
 
